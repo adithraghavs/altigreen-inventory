@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <div class="profile-content">
+        <h1>Username: {{ name }}</h1>
+        <h1>Status: {{ status }}</h1>
+    </div>
+<script>
+  var navProfile = document.getElementById("navProfile");
+  navProfile.className = "active"
+</script>
+{% endblock content %}

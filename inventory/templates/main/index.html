@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+{% block content %}
+<a href="/"><h1 class="main_h1" style="margin-top: 20px !important;">Altigreen Inventory Tracking System</h1></a>
+<div class="content">
+  <div class="cards_super">
+    <div class="cards">
+    <div class="card">
+        <a href="/table/masterinventory/"><h2>Master Inventory</h2></a>
+    </div>
+    <div class="card">
+        <a href="/table/equipmentmaster/"><h2>Equipment Master</h2></a>
+    </div>
+    <div class="card">
+        <a href="/table/equipmentcategory/"><h2>Equipment Categories</h2></a>
+    </div>
+    <div class="card">
+        <a href="/table/equipmentsubcategory/"><h2>Equipment Subcategories</h2></a>
+      </div>
+      <div class="card">
+        <a href="/table/employeemaster/"><h2>Employee Master</h2></a>
+      </div>
+      <div class="card">
+        <h2>Purchase Requests</h2>
+      </div>
+    <div class="card">
+        <h2>Purchase Orders</h2>
+      </div>
+      <div class="card">
+        <h2>Order Details</h2>
+      </div>
+      <div class="card">
+        <h2>Vendor Details</h2>
+      </div>
+      <div class="card">
+        <h2>Invoice Master</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var navHome = document.getElementById("navHome");
+  navHome.className = "active"
+</script>
+{% endblock content %}

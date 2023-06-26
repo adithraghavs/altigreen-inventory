@@ -1,0 +1,53 @@
+{% extends "main/base.html" %}
+{% load custom_filters %}
+{% load static %}
+{% load django_tables2 %}
+{% load bootstrap3 %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'main/css/table.css' %}">
+<h1 class="main_h1" style="margin-top: 20px;">{{ table_verbose_name_plural }}</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            {% for column in table.columns %}
+                <th>{{column}}</th>
+            {% endfor %}
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table.rows %}
+            <tr class="datarow" {% if table_name == "masterinventory" and status != 0 %} href="/update_object/{{table_name}}/{{table_name|updatedeletefilter:row}}"{% endif %}{% if status == 2 %} href="/update_object/{{table_name}}/{{table_name|updatedeletefilter:row}}" {% endif %} >
+                {% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+                <td class="delete"><form action="/delete/{{ table_name }}/{{table_name|updatedeletefilter:row}}/" method="post">
+                    {% csrf_token %}
+                    {% if table_name == "masterinventory" and status != 0 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                    {% elif status == 2 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                </form>
+                {% else %}
+                    <input type="button" class="table_delete disabled" value="Delete">
+                {% endif %} 
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    const trHREF = document.querySelectorAll("tr[href]");
+    // const trHREFhref = trHREF.getAttribute("href");
+    let trHREFhref;
+    // console.log(trHREFhref);
+    trHREF.forEach(element => {
+        element.addEventListener("click", () => {
+            trHREFhref = element.getAttribute("href");
+            window.location.href = trHREFhref;
+        });
+    });
+</script>
+{% endblock content %}

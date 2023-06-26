@@ -1,0 +1,112 @@
+{% extends "main/base.html" %}
+{% load custom_filters %}
+{% load static %}
+{% load django_tables2 %}
+{% load bootstrap3 %}
+{% block content %} 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'main/css/table.css' %}">
+<h1 class="main_h1" style="margin-top: 20px;">{{ table_verbose_name_plural }}</h1>
+<a href="/export_to_csv/{{ table_name }}/"><button class="add_new">Export to CSV</button></a>
+{% if status != 0 %}
+    <a href="/add_new/{{ table_name }}/"><button class="add_new">Add New {{ table_verbose_name_singular }}</button></a>
+{% else %}
+    {% if table_name == "masterinventory" and status == 0 %}
+        <a href="/add_new/{{ table_name }}/"><button class="add_new">Add New {{ table_verbose_name_singular }}</button></a>
+    {% else %}
+        <abbr title="You're not authenticated to use this function"><button class="add_new disabled"><span class="abbr_text">You're not authenticated to use this function</span> <span class="abbr_content">Add New {{ table_verbose_name_singular }}</span></button></abbr>
+    {% endif %}
+{% endif %}
+<div class="filter-btn">
+    <i class="fa-solid fa-filter"></i>
+</div>
+<div class="sidebar">
+    <div class="sidebar-xmark-div">
+        <div class="sidebar-xmark-btn">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </div>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+</div>
+
+<!-- <form action="/search/{{table_name}}">
+    <input type="text" name="q" class="searchbox">
+    <input type="submit" value="Search" class="search-submit">
+</form> -->
+
+<table class="table">
+    <thead>
+        <tr>
+            {% for column in table.columns %}
+                <th>{{column}}</th>
+            {% endfor %}
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table.rows %}
+            <tr class="datarow" {% if table_name == "masterinventory" and status != 0 %} href="/update_object/{{table_name}}/{{table_name|updatedeletefilter:row}}"{% endif %}{% if status == 2 %} href="/update_object/{{table_name}}/{{table_name|updatedeletefilter:row}}" {% endif %} >
+                {% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+                <td class="delete"><form action="/delete/{{ table_name }}/{{table_name|updatedeletefilter:row}}/" method="post">
+                    {% csrf_token %}
+                    {% if table_name == "masterinventory" and status != 0 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                    {% elif status == 2 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                </form>
+                {% else %}
+                    <input type="button" class="table_delete disabled" value="Delete">
+                {% endif %} 
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% block table_pagination %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if items.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ items.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current-page">
+                    Page {{ items.number }} of {{ items.paginator.num_pages }}.
+                </span>
+
+                {% if items.has_next %}
+                    <a href="?page={{ items.next_page_number }}">next</a>
+                    <a href="?page={{ items.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endblock %}
+
+<script>
+    const trHREF = document.querySelectorAll("tr[href]");
+    // const trHREFhref = trHREF.getAttribute("href");
+    let trHREFhref;
+    // console.log(trHREFhref);
+    trHREF.forEach(element => {
+        element.addEventListener("click", () => {
+            trHREFhref = element.getAttribute("href");
+            window.location.href = trHREFhref;
+        });
+    });
+
+    const sidebar = document.querySelector('.sidebar');
+    const filterBtn = document.querySelector('.filter-btn');
+    const xmarkBtn = document.querySelector('.sidebar-xmark-btn');
+    filterBtn.addEventListener("click", () => {
+        sidebar.style.left = "0";
+    });
+    xmarkBtn.addEventListener("click", () => {
+        sidebar.style.left = "-500px";
+    });
+</script>
+{% endblock content %}

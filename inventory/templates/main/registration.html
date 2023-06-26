@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    input, select {
+        /* display: inline-block; */
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        background-color: #22303c;
+        border: 0px;
+        color: #fff;
+        width: 100%;
+    }
+    form {
+        width: 100%;
+    }
+    .ctrlHolder {
+        margin-top: 10px;
+    }
+    input[type="submit"] {
+        background-color: #192734 !important;
+        transition: all 0.5s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #404040 !important;
+    }
+</style>
+<h2 class="form-subheading">Sign up</h2>
+<div class="form-card">
+    <form action="/register/" method="post">
+        {% csrf_token %}
+        <label class="label" for="username"
+        ><span class="content">Username (case-sensitive)</span></label
+      >
+        <input
+        type="text"
+        name="username"
+        maxlength="150"
+        autocomplete="off"
+        required
+        placeholder="Username"
+        style="margin-bottom: 20px !important;"
+      />
+
+      <label class="label" for="full_name"
+          ><span class="content">Full name</span></label
+        >
+      <input
+          type="text"
+          name="full_name"
+          maxlength="150"
+          autocomplete="off"
+          required
+          placeholder="Full name"
+          style="margin-bottom: 20px !important;"
+        />
+
+        <label class="label" for="email"
+        ><span class="content">Email</span></label
+      >
+    <input
+        type="email"
+        name="email"
+        maxlength="320"
+        autocomplete="off"
+        required
+        placeholder="Email"
+        style="margin-bottom: 20px !important;"
+      />
+
+      <label class="label" for="password" 
+      ><span class="content">Password</span></label
+    >
+    <input
+      type="password"
+      name="password"
+      maxlength="100"
+      autocomplete="off"
+      required
+      placeholder="Password"
+      style="margin-bottom: 20px !important;"
+    />
+
+    
+        <input type="submit" value="Sign up">
+    </form>
+</div>
+<script>
+  var navRegister = document.getElementById("navRegister");
+  navRegister.className = "active"
+</script>
+{% endblock content %}

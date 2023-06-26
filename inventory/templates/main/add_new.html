@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    input, select {
+        /* display: inline-block; */
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        background-color: #22303c;
+        border: 0px;
+        color: #fff;
+        width: 100%;
+    }
+    form {
+        width: 100%;
+    }
+    .ctrlHolder {
+        margin-top: 10px;
+    }
+    input[type="submit"] {
+        background-color: #192734 !important;
+        transition: all 0.5s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #404040 !important;
+    }
+</style>
+<h2 class="form-subheading">Add a new {{ table_verbose_name_singular }}</h2>
+<div class="form-card">
+    <form action="/add_new/{{table_name}}/" method="post">
+        {% csrf_token %}
+        <!-- <div class="input-group date" id="datetimepicker1" data-target-input="nearest"> -->
+            <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/> -->
+            {{form|crispy}}
+            <!-- <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker"> -->
+                <!-- <div class="input-group-text"><i class="fa fa-calendar"></i></div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <input type="submit" value="Add">
+    </form>
+</div>
+{% endblock content %}

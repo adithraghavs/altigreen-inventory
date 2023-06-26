@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+  </head>
+  <body>
+    <nav>
+      <div class="topnav">
+        <a id="navHome" href="{% url 'index' %}">Home</a>
+        {% if authenticated == False %}
+          <a href="{% url 'register' %}" id="navRegister">Sign up</a>
+          <a href="{% url 'login' %}" id="navSignIn">Sign in</a>
+        {% else %}
+          <a href="{% url 'profile' %}" id="navProfile">Profile</a>
+          <a href="{% url 'log_out' %}" id="navLogout">Log out</a>
+        {% endif %}
+        <a href="/table/masterinventory" id="navInventory">Inventory</a>
+        <!-- <a href="{% url 'login' %}" id="navHome">Equipment</a> -->
+        <!-- <a id="navHome"> -->
+        <div class="dropdown" id="navEquipment">
+            <button class="dropbtn">Equipment</button>
+            <div class="dropdown-content">
+              <a href="/table/equipmentmaster/">Equipment Master</a>
+              <a href="/table/equipmentcategory/">Equipment Categories</a>
+            </div>
+        </div>
+        <!-- </a> -->
+        <a href="/table/employeemaster/" id="navEmployees">Employees</a>
+        <a href="/table/purchaserequests/" id="navPurchaseRequests">Purchase Requests</a>
+        <a href="/table/purchaseorders/" id="navPurchaseOrders">Purchase Orders</a>
+        <a href="/table/vendordetails/" id="navVendors">Vendors</a>
+        <a href="/table/invoicemaster/" id="navInvoices">Invoices</a>
+      </div>
+    </nav>
+    <div class="content">
+      {% block content %}
+      {% endblock content %}
+    </div>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<h1 class="main_h1" style="margin-top: 20px;">{{ table_verbose_name_plural }}</h1>
+        {% if status != 0 %}
+            <a href="/add_new/{{ table_name }}/"><button class="add_new">Add New {{ table_verbose_name_singular }}</button></a>
+        {% else %}
+            {% if table_name == "masterinventory" and status == 0 %}
+                <a href="/add_new/{{ table_name }}/"><button class="add_new">Add New {{ table_verbose_name_singular }}</button></a>
+            {% else %}
+                <abbr title="You're not authenticated to use this function"><button class="add_new disabled"><span class="abbr_text">You're not authenticated to use this function</span> <span class="abbr_content">Add New {{ table_verbose_name_singular }}</span></button></abbr>
+            {% endif %}
+        {% endif %}
+        <ul class="objects_list" style="margin-top: 100px;">
+            {% for object in table_objects %}
+                <li><a href="/update_object/{{ table_name }}/{{ object.pk }}/"><div class="part p1"><strong style="text-decoration: underline;">{{ object }}</strong></div></a></li>
+                <div class="part p2"><form action="/delete/{{ table_name }}/{{ object.pk }}/" method="post">
+                    {% csrf_token %}
+                    {% if table_name == "masterinventory" and status != 0 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                    {% endif %} 
+                    {% if table_name != "masterinventory" and status == 2 %}
+                        <input type="submit" class="table_delete" value="Delete">
+                    {% endif %} 
+                </form></div>
+            {% endfor %}
+        </ul>
+
+        {% if table_name == "masterinventory" %}
+            <script>
+                var navInventory = document.getElementById("navInventory");
+                navInventory.classList.add("active");
+            </script>
+        {% elif table_name == "equipmentmaster" or table_name == "equipmentcategory" or table_name == "equipmentsubcategory" %}
+            <script>
+                var navEquipment = document.getElementById("navEquipment");
+                navEquipment.classList.add("active");
+            </script>
+        {% elif table_name == "employeemaster" %}
+            <script>
+                var navEmployees = document.getElementById("navEmployees");
+                navEmployees.classList.add("active");
+            </script>
+        {% elif table_name == "purchaserequests" %}
+            <script>
+                var navPurchaseRequests = document.getElementById("navPurchaseRequests");
+                navPurchaseRequests.classList.add("active");
+            </script>
+        {% elif table_name == "purchaseorders" %}
+            <script>
+                var navPurchaseOrders = document.getElementById("navPurchaseOrders");
+                navPurchaseOrders.classList.add("active");
+            </script>
+        {% elif table_name == "vendordetails" %}
+            <script>
+                var navVendors = document.getElementById("navVendors");
+                navVendors.classList.add("active");
+            </script>
+        {% elif table_name == "invoicemaster" %}
+            <script>
+                var navInvoices = document.getElementById("navInvoices");
+                navInvoices.classList.add("active");
+            </script>
+        {% endif %}
+
+        <script>
+            // var table = document.querySelector(".table-container").children[0];
+            // table.id = "table"
+            // var tr = document.getElementById('table').tHead.children[0],
+            // th = document.createElement('th');
+            // th.innerHTML = "Delete";
+            // tr.appendChild(th);
+            // var tBody = table.getElementsByTagName('tbody')[0];
+            // tBody.id = "tBody";
+            // var tBodyTRs = tBody.children;
+            // for (var i = 0; i < tBodyTRs.length; i++) {
+            //     var tBodyTr = tBodyTRs[i];
+            //     var tBodyTrDeleteTd = document.createElement("td");
+                
+            //     tBodyTrDeleteTd.innerHTML = `<form action="/delete/{{ table_name }}/{{ object.pk }}/" method="post">
+            //                 {% csrf_token %}
+            //                 {% if table_name == "masterinventory" and status != 0 %}
+            //                     <input type="submit" class="table_delete" value="Delete">
+            //                 {% endif %} 
+            //                 {% if table_name != "masterinventory" and status == 2 %}
+            //                     <input type="submit" class="table_delete" value="Delete">
+            //                 {% endif %} 
+            //             </form>`;
+            //     tBodyTr.appendChild(tBodyTrDeleteTd);
+            // }
+        
+            var table = document.querySelector(".table-container").children[0];
+            table.id = "table"
+            var tr = document.getElementById('table').tHead.children[0],
+            th = document.createElement('th');
+            th.innerHTML = "Update";
+            tr.appendChild(th);
+            var tBody = table.getElementsByTagName('tbody')[0];
+            tBody.id = "tBody";
+            var tBodyTRs = tBody.children;
+            for (var i = 0; i < tBodyTRs.length; i++) {
+                var tBodyTr = tBodyTRs[i];
+                var tBodyTrUpdateTd = document.createElement("td");
+                // {% if table_name == "masterinventory" %}
+                var asset_code = tBodyTr.children[0];
+                tBodyTrUpdateTd.innerHTML = `
+                    <a href="/update_object/{{ table_name }}/{{asset_code|masterinventoryupdatedeletefilter}}">Update</a>
+                `;
+                // {% endif %}
+                tBodyTr.appendChild(tBodyTrUpdateTd);
+            }
+            </script>
+
+
+/update_object/{{table_name}}/{{table_name|updatedeletefilter:row}}
+
+/delete/{{ table_name }}/{{table_name|updatedeletefilter:row}}/
+
+
+query_new = query.split('[')
+query_new = query_new[1].split(']')
+query_new = query_new[0].split('=')
+query_new = query_new[0].split('(')
+query_new = query_new[1].split(')')
+print(query_new)

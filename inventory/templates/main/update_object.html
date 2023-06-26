@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    input, select {
+        /* display: inline-block; */
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        background-color: #22303c;
+        border: 0px;
+        color: #fff;
+        width: 100%;
+    }
+    .ctrlHolder {
+        margin-top: 10px;
+    }
+    form {
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        background-color: #192734 !important;
+        transition: all 0.5s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #404040 !important;
+    }
+</style>
+<h2 class="form-subheading">Update {{ object }}</h2>
+<div class="form-card">
+    <form action="/update_object/{{ table_name }}/{{ object.pk }}/" method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Update">
+    </form>
+</div>
+{% endblock content %}

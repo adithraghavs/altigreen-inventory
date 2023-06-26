@@ -1,0 +1,131 @@
+/* th:not(:first-child):not(:last-child) {
+    border: 1px solid #fff;
+    border-left: 0;
+    border-right: 0;
+}
+
+th:first-child {
+   border: 1px solid #fff; 
+   border-right: 0;
+}
+
+th:last-child {
+    border: 1px solid #fff; 
+    border-left: 0;
+} */
+table, th, td, tr {
+    border: 1px solid #fff;
+    padding: 5px;
+    text-align: center !important;
+}
+
+td.delete {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.add_new {
+    margin-bottom: 20px;
+}
+
+.datarow:hover {
+    cursor: pointer;
+    background-color: #223e3e;
+}
+
+input.searchbox {
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline;
+}
+
+input.search-submit {
+    display: inline;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.25s ease-in-out;
+}
+
+input.search-submit:hover {
+    background-color: antiquewhite !important;
+    color: #000;
+}
+
+.sidebar form input, .sidebar form select {
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    /* display: inline; */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.sidebar form select {
+    width: 200px;
+}
+
+.sidebar {
+    padding: 10px;
+    background-color: #161818;
+    width: min-content;
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: -500px;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.filter-btn {
+    /* border: 1px solid #fff; */
+    margin: 10px;
+    width: min-content;
+    height: min-content;
+    padding: 10px;
+    font-size: large;
+    border-radius: 5px;
+    background-color: #192121;
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+    background-color: antiquewhite;
+    color: #000;
+}
+
+.sidebar-xmark-btn {
+    margin: 10px;
+    width: min-content;
+    height: min-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: large;
+    border-radius: 5px;
+    background-color: #192121 !important;
+    transition: all 0.2s ease-in-out;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.sidebar-xmark-div {
+    width: 100% !important;
+    height: 50px;
+}
+
+.sidebar-xmark-btn:hover {
+    background-color: antiquewhite !important;
+    color: #000;
+}
+
