@@ -163,11 +163,18 @@ def generate(objects, previous_object_id, prefix):
 def index(request):
     return render(request, "main/index.html")
 
+def check_login(request):
+    if not request.user:
+        return HttpResponseRedirect('login/')
+    else:
+        return
+
 # @login_required
 class TableView(SingleTableView, FilterView):
-    template_name = "main/table.html"
 
+    template_name = "main/table.html"
     def get(self, request, table_name):
+        check_login(request)
         required_table = apps.get_model(app_label='main', model_name=table_name)
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
@@ -282,6 +289,7 @@ class TableView(SingleTableView, FilterView):
 #     paginate_by = 20
 
 def search(request, table_name):
+    check_login(request)
     query = request.GET.get("q")
     required_table = apps.get_model(app_label='main', model_name=table_name)
     queryset = required_table.objects.all()
@@ -362,6 +370,7 @@ def search(request, table_name):
 #     return HttpResponse("Import Successful!")
 
 def import_csv(request, table_name):
+    check_login(request)
     required_table = apps.get_model(app_label='main', model_name=table_name)
     queryset = required_table.objects.all()
 
@@ -399,6 +408,7 @@ def import_csv(request, table_name):
 
 
 def export_to_csv(request, table_name):
+    check_login(request)
     required_table = apps.get_model(app_label='main', model_name=table_name)
     queryset = required_table.objects.all()
     if table_name == "masterinventory":
@@ -449,6 +459,7 @@ def export_to_csv(request, table_name):
 
 # @login_required
 def add_new(request, table_name):
+    check_login(request)
     required_table = apps.get_model(app_label='main', model_name=table_name)
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
@@ -675,6 +686,7 @@ def add_new(request, table_name):
             return render(request, 'main/add_new.html', context_add_new)
 # @login_required        
 def delete(request, table_name, pk):
+    check_login(request)
     required_table = apps.get_model(app_label='main', model_name=table_name)
     object_to_delete = required_table.objects.get(id=pk)
     user = request.user
@@ -686,6 +698,7 @@ def delete(request, table_name, pk):
     return HttpResponseRedirect('/table/'+table_name)
 # @login_required
 def update_object(request, table_name, pk):
+    check_login(request)
     user = request.user
     # print("hiiiwfvnw")
     # print([f for f in EquipmentMaster._meta.get_fields() if not f.auto_created])
@@ -861,6 +874,7 @@ def update_object(request, table_name, pk):
 
 # @login_required
 def profile(request):
+    check_login(request)
     user_profile = UserProfile.objects.get(user=request.user)
     status = "User"
     if (user_profile.status == 1):

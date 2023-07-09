@@ -17,10 +17,10 @@
           <a href="{% url 'register' %}" id="navRegister">Sign up</a>
           <a href="{% url 'login' %}" id="navSignIn">Sign in</a>
         {% else %}
+        
           <a href="{% url 'profile' %}" id="navProfile">Profile</a>
           <a href="{% url 'log_out' %}" id="navLogout">Log out</a>
-        {% endif %}
-        <a href="/table/masterinventory" id="navInventory">Inventory</a>
+          <a href="/table/masterinventory" id="navInventory">Inventory</a>
         <!-- <a href="{% url 'login' %}" id="navHome">Equipment</a> -->
         <!-- <a id="navHome"> -->
         <div class="dropdown" id="navEquipment">
@@ -37,6 +37,8 @@
         <a href="/table/vendordetails/" id="navVendors">Vendors</a>
         <a href="/table/invoicemaster/" id="navInvoices">Invoices</a>
       </div>
+        {% endif %}
+        
     </nav>
     <div class="content">
       {% block content %}
